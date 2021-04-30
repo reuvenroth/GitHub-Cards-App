@@ -1,8 +1,5 @@
-const testData = [
-    {name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"},
-    {name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu"},
-    {name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook"},
-];
+// GitHub usernames: gaearon, sophiebits, sebmarkbage, bvaughn
+// more friend samples: shmuwol, sharshi, dlehren, reuvenroth
 
 const CardList = (props) => (
 	<div>
@@ -26,12 +23,13 @@ class Card extends React.Component {
 }
 
 class Form extends React.Component {
-  state = { userName: '' };
+  state = { userName: '' }; //initializes an empty form
   handleSubmit = async (event) => { //added async
-    event.preventDefault();
+    event.preventDefault(); //prevents page reload
     //fetch can be used here instead of:
    const resp = await axios.get(`https://api.github.com/users/${this.state.userName}`);
-    console.log(resp); //response object here retrieves ALL GitHub Data. Add resp.data to parse and make the data ready.
+   this.props.onSubmit(resp.data);
+   this.setState({ userName: '' }); //resets form after input submission
   };
   render() {
     return (
@@ -41,7 +39,7 @@ class Form extends React.Component {
           value={this.state.userName}
           onChange={event => this.setState({ userName: event.target.value })}
           placeholder="GitHub username" 
-          required />
+          required /> //required throws alert to "please fill out this field"
         <button>Add card</button>
       </form>
     );
@@ -50,7 +48,7 @@ class Form extends React.Component {
 
 class App extends React.Component {
   state = {
-    profiles: testData,
+    profiles: [], //empty array to receive appended profiles
 };
 
 /* Longer, current JS syntax:
@@ -63,11 +61,16 @@ class App extends React.Component {
   }
 */
   
+  addNewProfile = (profileData) => {
+    this.setState(prevState => ({
+      profiles: [...prevState.profiles, profileData] //...prevState concats current & new
+    }))
+  };
 	render() {
   	return (
     	<div>
     	  <div className="header">{this.props.title}</div>
-        <Form />
+        <Form onSubmit={this.addNewProfile} />
         <CardList profiles={this.state.profiles} />
     	</div>
     );
