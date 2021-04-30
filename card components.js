@@ -35,13 +35,27 @@ class Form extends React.Component {
     );
   }
 }
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profiles: testData,
+    };
+  }
+
+/* future JavaScript shorter syntax:  
+  state = {
+  profiles: testData,
+};
+*/
+  
 	render() {
   	return (
     	<div>
     	  <div className="header">{this.props.title}</div>
         <Form />
-        <CardList profiles={testData} />
+        <CardList profiles={this.state.profiles} />
     	</div>
     );
   }	
