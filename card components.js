@@ -3,8 +3,8 @@
 
 const CardList = (props) => (
 	<div>
-  	{props.profiles.map(profile => <Card {...profile}/>)}
-	</div>
+	{props.profiles.map(profile => <Card key={profile.id} {...profile}/>)}
+	</div> //key added to prevent array order change issues
 );
 
 class Card extends React.Component {
@@ -38,8 +38,8 @@ class Form extends React.Component {
           type="text" 
           value={this.state.userName}
           onChange={event => this.setState({ userName: event.target.value })}
-          placeholder="GitHub username" 
-          required /> //required throws alert to "please fill out this field"
+          placeholder="GitHub username" //required throws alert to "please fill out this field"
+          required />
         <button>Add card</button>
       </form>
     );
