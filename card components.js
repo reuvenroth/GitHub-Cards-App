@@ -26,10 +26,13 @@ class Card extends React.Component {
 }
 
 class Form extends React.Component {
+  handleSubmit = (event) => {
+    event.preventDefault();
+  };
   render() {
     return (
-      <form action="">
-        <input type="text" placeholder="GitHub username"/>
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="GitHub username" required />
         <button>Add card</button>
       </form>
     );
@@ -37,17 +40,18 @@ class Form extends React.Component {
 }
 
 class App extends React.Component {
+  state = {
+    profiles: testData,
+};
+
+/* Longer, current JS syntax:
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       profiles: testData,
     };
   }
-
-/* future JavaScript shorter syntax:  
-  state = {
-  profiles: testData,
-};
 */
   
 	render() {
