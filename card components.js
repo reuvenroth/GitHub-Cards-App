@@ -27,9 +27,11 @@ class Card extends React.Component {
 
 class Form extends React.Component {
   state = { userName: '' };
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => { //added async
     event.preventDefault();
-    console.log(this.state.userName);
+    //fetch can be used here instead of:
+   const resp = await axios.get(`https://api.github.com/users/${this.state.userName}`);
+    console.log(resp); //response object here retrieves ALL GitHub Data. Add resp.data to parse and make the data ready.
   };
   render() {
     return (
