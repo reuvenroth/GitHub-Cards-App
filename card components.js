@@ -6,13 +6,14 @@
 
 const CardList = (props) => (
   <div>
-    <Card />
+    <Card {...testData[0]} />
+    <Card {...testData[1]} />
   </div>
 );
 
 class Card extends React.Component {
 	render() {
-    const profile = testData[0];
+    const profile = this.props;
   	return (
     	<div className="github-profile">
     	  <img src={profile.avatar_url} />
